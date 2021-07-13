@@ -6,7 +6,7 @@ describe('mosaic grid application', () => {
 	})
 
 	it('sorts in ascending', () => {
-		cy.get('table').get('thead > tr > :nth-child(1)').click()
+		cy.get('table').get('thead > tr > :nth-child(1)').click().contains('A-Z')
 		cy.get('table > tbody > tr > :nth-child(1)').then($col => {
 			const names = $col.toArray().map($el => $el.innerText)
 			expect(names).to.be.sorted({ ascending: true })
@@ -14,7 +14,11 @@ describe('mosaic grid application', () => {
 	})
 
 	it('sorts in descending on second click', () => {
-		cy.get('table').get('thead > tr > :nth-child(1)').click().click()
+		cy.get('table')
+			.get('thead > tr > :nth-child(1)')
+			.click()
+			.click()
+			.contains('Z-A')
 		cy.get('table > tbody > tr > :nth-child(1)').then($col => {
 			const names = $col.toArray().map($el => $el.innerText)
 			expect(names).to.be.sorted({ descending: true })
