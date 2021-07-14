@@ -52,5 +52,4 @@ describe('mosaic grid application', () => {
 			})
 		})
 	}
-	// check clicking a column, then switching to a new column
 })
