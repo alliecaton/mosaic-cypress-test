@@ -9,6 +9,7 @@ describe('mosaic grid application', () => {
 	// check clicking the same column once, twice, three times in a row
 	// const headerLength = document.querySelectorAll('td')
 	// console.log(headerLength.length)
+
 	for (let i = 1; i <= 5; i++) {
 		it('sorts in ascending', () => {
 			cy.get(`table > thead > tr > :nth-child(${i})`)
@@ -47,8 +48,7 @@ describe('mosaic grid application', () => {
 			cy.log(original)
 			cy.get('table').get(`thead > tr > :nth-child(${i}`).click()
 			cy.get(`table > tbody > tr > :nth-child(${i})`).each(($el, index) => {
-				// iterate over each element and compare to original
-				expect($el.text()).to.equal(original[index]) // compare each element text to the original text at the same index
+				expect($el.innerText).to.equal(original[index]) // compare each element text to the original text at the same index
 			})
 		})
 	}
