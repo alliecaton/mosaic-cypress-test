@@ -1,18 +1,21 @@
 /// <reference types="cypress" />
 
 describe('pin columns to left grid', () => {
-	beforeEach(() => {
+	it('visits the page', () => {
 		cy.visit('https://data-grid-qa-challenge-prod.herokuapp.com/')
 		cy.wait(500)
 	})
 
 	for (let i = 1; i <= 5; i++) {
 		it('gets column', () => {
+			const originalHeaders = []
 			cy.get('table > thead > tr').then($col => {
-				const originalHeaders = $col.toArray()[0].childNodes
+				originalHeaders.push($col.toArray()[0].childNodes)
 			})
-			cy.get(`table > thead > tr > :nth-child(${i})`).click()
-			originalHeaders[0].should('have.css', 'background-color', 'rgb(0, 0, 0)')
+			cy.get(`table > thead > tr > :nth-child(${i})`)
+				.click({ metaKey: true })
+				.should('have.attr', 'style')
+				.should('contain', 'background: yellow') // checks color change
 
 			// meta click and store inner text on that node
 			// fine node with bg color if exists
