@@ -6,11 +6,23 @@ describe('mosaic grid application', () => {
 	})
 
 	it('sorts in ascending', () => {
-		cy.get('table').get('thead > tr > :nth-child(1)').click().contains('A-Z')
-		cy.get('table > tbody > tr > :nth-child(1)').then($col => {
-			const names = $col.toArray().map($el => $el.innerText)
-			expect(names).to.be.sorted({ ascending: true })
-		})
+		for (let i = 1; i < 4; i++) {
+			cy.get('table')
+				.get(`thead > tr > :nth-child(${i})`)
+				.click()
+				.contains('A-Z') // checks that it contains the sorted label
+			cy.get(`table > tbody > tr > :nth-child(${i}`).then($col => {
+				const names = $col
+					.toArray()
+					.map($el =>
+						parseInt($el.innerText)
+							? parseInt($el.innerText.replace(/,/g, ''))
+							: $el.innerText
+					)
+				cy.log('names', names)
+				expect(names).to.be.sorted({ ascending: true })
+			})
+		}
 	})
 
 	it('sorts in descending on second click', () => {
